@@ -1,0 +1,39 @@
+<style lang="less">
+  image{
+    width: ~"90rpx";
+    height: ~"90rpx";
+  }
+</style>
+<template>
+  <view class="container">
+    <repeat for="{{5}}" key="index">
+      <view @tap="clickStar({{index}})">
+        <image src="../../images/icon-star-yellow.png" wx:if="{{index<star}}"></image>
+        <image src="../../images/icon-star-gray.png" wx:else></image>
+      </view>
+    </repeat>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Index extends wepy.component {
+    constructor() {
+      super();
+    }
+
+    props={
+      star:{
+        type:Number,
+      }
+    };
+
+    computed = {};
+    methods = {
+      clickStar(index){
+        this.$emit('clickStar',index+1);
+      }
+    };
+  }
+</script>

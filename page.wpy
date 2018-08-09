@@ -1,0 +1,34 @@
+<style lang="less">
+</style>
+<template>
+  <view class="container">
+      <Com :star.sync="star"></Com>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import com from './com';
+
+  export default class Index extends wepy.page {
+
+    config = {
+      navigationBarTitleText: 'test'
+    };
+    mixins = [];
+    components = {
+      'Com':com,
+    };
+    data = {
+      star:5,
+    };
+    computed = {};
+    methods = {};
+    events={
+      clickStar(star){
+        this.star=star;
+      }
+    };
+  };
+
+</script>

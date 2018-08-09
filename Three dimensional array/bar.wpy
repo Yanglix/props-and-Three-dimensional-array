@@ -1,0 +1,214 @@
+<style lang="less">
+  @import "../styles/app";
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text {
+      border: 1px solid #000;
+    }
+  }
+
+  .bg-black {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .bg-write {
+    background: #fff;
+    color: black;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+<template>
+  <view class="container">
+    <view class="header">
+      <repeat for="{{header}}" key="index">
+        <text @tap="bgClickSwitch({{index}})" class="{{index===current?'bg-black':''}}">{{item}}</text>
+      </repeat>
+    </view>
+    <view class="header">
+      <repeat for="{{bar}}" key="item">
+        <text @tap="bgClickSwitchOne({{index}})" class="{{index===barCurrent?'bg-black':''}}">{{item}}</text>
+      </repeat>
+    </view>
+    <view class="body">
+      <repeat for="{{list[current][barCurrent]}}" key="index">
+        <text>{{item.header}}</text>
+        <text>{{item.title}}</text>
+        <text>{{item.body}}</text>
+        <text>{{item.bottom}}</text>
+      </repeat>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Index extends wepy.page {
+
+    config = {
+      navigationBarTitleText: 'test'
+    };
+    mixins = [];
+    components = {};
+    data = {
+      header: ['门店消费', '订单详情'],
+      bar: ['未付款', '未付款', '未付款', '未付款'],
+      list: [
+        [
+          [
+            {
+              header: 'aaaaaa',
+              title: 'bbbbbbbb',
+              body: 'ccccccccc',
+              bottom: 'dddddddddd'
+            },
+            {
+              header: 'eeeeeeee',
+              title: 'ffffffffff',
+              body: 'gggggggg',
+              bottom: 'hhhhhhhh'
+            },
+          ],
+          [
+            {
+              header: 'iiiiiiiiiii',
+              title: 'jjjjjjjjj',
+              body: 'kkkkkkkkkkkkk',
+              bottom: 'llllllllllllll'
+            },
+            {
+              header: 'mmmmmmmmmmmm',
+              title: 'nnnnnnnnnnnn',
+              body: 'oooooooooo',
+              bottom: 'pppppppppppp'
+            },
+          ],
+          [
+            {
+              header: 'qqqqqqqqqq',
+              title: 'rrrrrrrrrrr',
+              body: 'sssssssssssss',
+              bottom: 'yttttttttttt'
+            },
+            {
+              header: 'uuuuuuuuuu',
+              title: 'vvvvvvvvvvv',
+              body: 'wwwwwwwww',
+              bottom: 'xxxxxxxxxxx'
+            },
+          ],
+          [
+            {
+              header: 'yyyyyyyyyyy',
+              title: 'zzzzzzzzzzz',
+              body: 'AAAAAAAAA',
+              bottom: 'BBBBBBBBBB'
+            },
+            {
+              header: 'CCCCCCCCCCC',
+              title: 'DDDDDDDDD',
+              body: 'EEEEEEEEE',
+              bottom: 'FFFFFFFFFF'
+            },
+          ],
+        ],
+        [
+          [
+            {
+              header: 'GGGGGGGGGGG',
+              title: 'HHHHHHHHHHH',
+              body: 'IIIIIIIIII',
+              bottom: 'JJJJJJJJJ'
+            },
+            {
+              header: 'KKKKKKKKK',
+              title: 'LLLLLLLLLLL',
+              body: 'MMMMMMMMMM',
+              bottom: 'NNNNNNNNNNN'
+            },
+          ],
+          [
+            {
+              header: 'UUUUUUUUU',
+              title: 'VVVVVVVVVVVV',
+              body: 'WWWWWWWWWWW',
+              bottom: 'XXXXXXXXXXX'
+            },
+            {
+              header: 'YYYYYYYYYY',
+              title: 'ZZZZZZZZZZ',
+              body: 'YYYYYLLLLLL',
+              bottom: 'LLLLLLLYYYYY'
+            },
+          ],
+          [
+            {
+              header: 'ZZZZZZZZZ',
+              title: '11111111111',
+              body: '222222222222',
+              bottom: '33333333333'
+            },
+            {
+              header: '44444444444',
+              title: '55555555555',
+              body: '6666666666',
+              bottom: '7777777777777'
+            },
+          ],
+          [
+            {
+              header: '8888888888',
+              title: '999999999999',
+              body: '1010101001010',
+              bottom: '111111111111'
+            },
+            {
+              header: '1212121212',
+              title: '1313131313',
+              body: '1414141414',
+              bottom: '1515151515'
+            },
+          ],
+        ]
+      ],
+      current: 0,
+      barCurrent: 0
+    };
+
+    getListInfo() {
+      let pageNum = 1;
+      let pageSize = 2;
+      let orderList = this.list[this.current][this.barCurrent];
+      if (orderList.length === 0) {
+        pageNum = 1;
+      } else if (orderList.length > 0 && orderList.length % pageSize === 0) {
+        pageNum = orderList.length / pageSize;
+      } else if (orderList.length > 0 && orderList.length % pageSize > 0) {
+        pageNum = Math.ceil(orderList.length / pageSize)
+      }
+      console.log(pageNum,'pageNUm');
+      return pageNum;
+    }
+
+    computed = {};
+    methods = {
+      bgClickSwitch: (index) => {
+        console.log(index,'index');
+        this.current = index;
+      },
+      bgClickSwitchOne: (index) => {
+        console.log(index);
+        this.barCurrent = index;
+        this.getListInfo();
+      },
+    };
+  }
+</script>
